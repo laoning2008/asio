@@ -182,6 +182,10 @@
 #include "asio/use_future.hpp"
 #include "asio/uses_executor.hpp"
 #include "asio/version.hpp"
+#include <asio/vm/basic_endpoint.hpp>
+#include <asio/vm/cid.hpp>
+#include <asio/vm/datagram_protocol.hpp>
+#include <asio/vm/stream_protocol.hpp>
 #include "asio/wait_traits.hpp"
 #include "asio/windows/basic_object_handle.hpp"
 #include "asio/windows/basic_overlapped_handle.hpp"

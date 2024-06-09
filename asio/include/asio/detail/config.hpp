@@ -851,6 +851,11 @@
 #   error Linux kernel 5.10 or later is required to support io_uring
 #  endif // LINUX_VERSION_CODE < KERNEL_VERSION(5,10,0)
 # endif // defined(ASIO_HAS_IO_URING)
+# if !defined(ASIO_HAS_VM_SOCKETS)
+#  if LINUX_VERSION_CODE >= KERNEL_VERSION(5,6,0)
+#   define ASIO_HAS_VM_SOCKETS 1
+#  endif // LINUX_VERSION_CODE >= KERNEL_VERSION(5,6,0)
+# endif // !defined(ASIO_HAS_VM_SOCKETS)
 #endif // defined(__linux__)
 
 // Linux: io_uring is used instead of epoll.
