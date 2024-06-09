@@ -1,9 +1,8 @@
 #include <cstdio>
 #include <iostream>
-#include <array.hpp>
+#include <array>
 #include <functional>
-#include <enable_shared_from_this.hpp>
-#include <shared_ptr.hpp>
+#include <memory>
 #include <asio.hpp>
 
 #if defined(ASIO_HAS_VM_SOCKETS)
@@ -11,7 +10,7 @@
 using asio::vm::stream_protocol;
 
 class session
-  : public boost::enable_shared_from_this<session>
+  : public std::enable_shared_from_this<session>
 {
 public:
   session(asio::io_context& io_context)
@@ -33,20 +32,20 @@ public:
           asio::placeholders::bytes_transferred));
   }
 
-  void handle_read(const boost::system::error_code& error,
+  void handle_read(const asio::error_code& error,
       size_t bytes_transferred)
   {
     if (!error)
     {
       asio::async_write(socket_,
           asio::buffer(data_, bytes_transferred),
-          boost::bind(&session::handle_write,
+          std::bind(&session::handle_write,
             shared_from_this(),
             asio::placeholders::error));
     }
   }
 
-  void handle_write(const boost::system::error_code& error)
+  void handle_write(const asio::error_code& error)
   {
     if (!error)
     {
@@ -63,7 +62,7 @@ private:
   stream_protocol::socket socket_;
 
   // Buffer used to store data received from the client.
-  boost::array<char, 1024> data_;
+  std::array<char, 1024> data_;
 };
 
 typedef std::shared_ptr<session> session_ptr;
@@ -82,7 +81,7 @@ public:
   }
 
   void handle_accept(session_ptr new_session,
-      const boost::system::error_code& error)
+      const asio::error_code& error)
   {
     if (!error)
     {

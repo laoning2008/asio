@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <iostream>
-#include <bind/bind.hpp>
+#include <functional>
 #include <asio.hpp>
 
 #if defined(ASIO_HAS_VM_SOCKETS)
